@@ -19,6 +19,8 @@ const userController = new UserController();
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
  *               username:
  *                 type: string
  *               password:
@@ -27,7 +29,7 @@ const userController = new UserController();
  *       200:
  *         description: User created successfully
  */
-userRoutes.post('/user/create', auth, (req: Request, res: Response) => {userController.createUser(req, res)});
+userRoutes.post('/user/create', (req: Request, res: Response) => {userController.createUser(req, res)});
 
 /**
  * @swagger
