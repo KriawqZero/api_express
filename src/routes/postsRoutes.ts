@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { PostsController } from "../entities/Posts/postsController";
+import { auth } from "../middlewares/auth";
 
 const postsRoutes = Router();
 const postsController = new PostsController();
@@ -27,7 +28,7 @@ const postsController = new PostsController();
  *       200:
  *         description: Post created successfully
  */
-postsRoutes.post('/post/create', (req, res) => {postsController.createPost(req, res)});
+postsRoutes.post('/post/create', auth, (req, res) => {postsController.createPost(req, res)});
 
 /**
  * @swagger
@@ -39,7 +40,7 @@ postsRoutes.post('/post/create', (req, res) => {postsController.createPost(req, 
  *       200:
  *         description: List of all posts
  */
-postsRoutes.get('/posts/all', (req, res) => {postsController.getAllPosts(req, res)});
+postsRoutes.get('/posts/all', auth, (req, res) => {postsController.getAllPosts(req, res)});
 
 /**
  * @swagger
@@ -58,7 +59,7 @@ postsRoutes.get('/posts/all', (req, res) => {postsController.getAllPosts(req, re
  *       200:
  *         description: Post found
  */
-postsRoutes.get('/post/:id', (req, res) => {postsController.getPostById(req, res)});
+postsRoutes.get('/post/:id', auth, (req, res) => {postsController.getPostById(req, res)});
 
 /**
  * @swagger
@@ -77,7 +78,7 @@ postsRoutes.get('/post/:id', (req, res) => {postsController.getPostById(req, res
  *       200:
  *         description: Post deleted successfully
  */
-postsRoutes.delete('/post/:id', (req, res) => {postsController.deletePostById(req, res)});
+postsRoutes.delete('/post/:id', auth, (req, res) => {postsController.deletePostById(req, res)});
 
 /**
  * @swagger
@@ -96,6 +97,6 @@ postsRoutes.delete('/post/:id', (req, res) => {postsController.deletePostById(re
  *       200:
  *         description: List of posts by user
  */
-postsRoutes.get('/post/user/:userId', (req, res) => {postsController.getPostsByUserId(req, res)});
+postsRoutes.get('/post/user/:userId', auth, (req, res) => {postsController.getPostsByUserId(req, res)});
 
 export default postsRoutes;

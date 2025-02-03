@@ -2,7 +2,8 @@ import { UserRepository } from "./userRepository";
 import { CreateUserDTO, CreateUserOutputDTO } from "./user";
 import { Request, Response } from "express";
 import { HashManager } from "../../helpers/hashManager";
-import { hash } from "crypto";
+import jwt from 'jsonwebtoken';
+import { config } from "../../config";
 import { User } from "@prisma/client";
 
 export class UserController {
@@ -59,7 +60,12 @@ export class UserController {
         }
 
        if(await this.hashManager.compare(req.body.password, user.password)) {
-           return res.status(200).json({ message: "Login successful" });
+            // Gera o token JWT
+           const token = jwt.sign({ id: user.id }, config.token_secret, {
+               expiresIn: config.token_time, // token expira em 1 hora
+           });
+
+           return res.status(200).json({ token });
        }
 
        return res.status(400).json({ message: "Invalid password" });

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../entities/User/userController";
 import { Request, Response } from "express";
+import { auth } from "../middlewares/auth";
 
 const userRoutes = Router();
 const userController = new UserController();
@@ -26,7 +27,7 @@ const userController = new UserController();
  *       200:
  *         description: User created successfully
  */
-userRoutes.post('/user/create', (req: Request, res: Response) => {userController.createUser(req, res)});
+userRoutes.post('/user/create', auth, (req: Request, res: Response) => {userController.createUser(req, res)});
 
 /**
  * @swagger
@@ -45,7 +46,7 @@ userRoutes.post('/user/create', (req: Request, res: Response) => {userController
  *       200:
  *         description: User found
  */
-userRoutes.get('/user/:username', (req: Request, res: Response) => {userController.getUserByUsername(req, res)});
+userRoutes.get('/user/:username', auth, (req: Request, res: Response) => {userController.getUserByUsername(req, res)});
 
 /**
  * @swagger
@@ -64,7 +65,7 @@ userRoutes.get('/user/:username', (req: Request, res: Response) => {userControll
  *       200:
  *         description: User found
  */
-userRoutes.get('/user/id/:id', (req: Request, res: Response) => {userController.getUserById(req, res)});
+userRoutes.get('/user/id/:id', auth, (req: Request, res: Response) => {userController.getUserById(req, res)});
 
 /**
  * @swagger
@@ -76,7 +77,7 @@ userRoutes.get('/user/id/:id', (req: Request, res: Response) => {userController.
  *       200:
  *         description: List of all users
  */
-userRoutes.get('/users/all', (req: Request, res: Response) => {userController.getAllUsers(req, res)});
+userRoutes.get('/users/all', auth, (req: Request, res: Response) => {userController.getAllUsers(req, res)});
 
 /**
  * @swagger
@@ -95,7 +96,7 @@ userRoutes.get('/users/all', (req: Request, res: Response) => {userController.ge
  *       200:
  *         description: User deleted successfully
  */
-userRoutes.delete('/user/id/:id', (req: Request, res: Response) => {userController.deleteUserById(req, res)});
+userRoutes.delete('/user/id/:id', auth, (req: Request, res: Response) => {userController.deleteUserById(req, res)});
 
 /**
  * @swagger
